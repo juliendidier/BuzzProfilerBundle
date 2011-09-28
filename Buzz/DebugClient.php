@@ -41,14 +41,4 @@ class DebugClient implements Client\ClientInterface
         return $this->calls;
     }
 
-    protected function addRequest(Message\Request $request)
-    {
-        array_push($this->requests, $request);
-    }
-
-    protected function addResponse(Message\Response $response)
-    {
-        array_push($this->responses, $response);
-    }
-
 }
