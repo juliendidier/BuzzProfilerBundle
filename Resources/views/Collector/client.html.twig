@@ -1,0 +1,92 @@
+{% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+
+{% block toolbar %}
+    {% set icon %}
+        <img width="23" height="28" alt="Buzz" style="border-width: 0; vertical-align: middle; margin-right: 5px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAcCAYAAACK7SRjAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAcNJREFUeNpi/P//PwOtABMDDcGo4fQ3nFFOTg5DUFJS8gkrK6vEly9fAt+9e7cZiz4uIJbCIv77IRDgdLmYmNgRDg4OaWYg4OLiWikoKKiGxRAHIL6JBe+Xl5dnxmq4qKjoDm5ubmsYH+h6TqAFp4EWiKD7GKoXHTNjDXMREZEeHh4ed3QnsrGx8bGzsx9CE8aV8/5hGC4kJBQJdHERrojh5OTUBPpqC8mpBWiwF9DFi5mYmBjxKQSq8Qb6bh5JhgM1bQRFHjGKeXl5E4GOCQIyvxKjnuXnz59noRHxH5hKTLD54MePH8/+/v17D8j8A8Rv8Rj+D5gS/2JN57Kysr9YWFhY0XV8+vQp7u3bt0eBzFhQFACxBhD7YzH8ExDPh0bsPxaYKDC5sUGTGDYgAMpbQNxAICT4gDgfyj5GbPYXAmKQy7OJVA/KUGGkli3TgLiZgJqXQBwIDPun5BRcdUC8HIfcdyCOBBp8HSP7MzLiTOroEmnQYEIH5UCD92MtW/7jrlD/ovG/gLwOxBeQxJqABk9GSecwxvv3738BXe4ATWrIZQQT0M6LWCx8DQoCIN4JxMeBBtdjeHe09h81nGgAEGAA59t54ZXuWKEAAAAASUVORK5CYII=" />
+    {% endset %}
+    {% set text %}
+        <span>
+            {% set count = collector.getNbCalls() %}
+            {% transchoice count %}
+                {0} No calls|{1} 1 call|]1,Inf] %count% calls
+            {% endtranschoice %}
+        </span>
+    {% endset %}
+    {% include 'WebProfilerBundle:Profiler:toolbar_item.html.twig' with { 'link': profiler_url } %}
+{% endblock %}
+
+{% block menu %}
+<span class="label">
+    <span class="icon">
+        <img alt="Configuration" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAcCAYAAACK7SRjAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAcNJREFUeNpi/P//PwOtABMDDcGo4fQ3nFFOTg5DUFJS8gkrK6vEly9fAt+9e7cZiz4uIJbCIv77IRDgdLmYmNgRDg4OaWYg4OLiWikoKKiGxRAHIL6JBe+Xl5dnxmq4qKjoDm5ubmsYH+h6TqAFp4EWiKD7GKoXHTNjDXMREZEeHh4ed3QnsrGx8bGzsx9CE8aV8/5hGC4kJBQJdHERrojh5OTUBPpqC8mpBWiwF9DFi5mYmBjxKQSq8Qb6bh5JhgM1bQRFHjGKeXl5E4GOCQIyvxKjnuXnz59noRHxH5hKTLD54MePH8/+/v17D8j8A8Rv8Rj+D5gS/2JN57Kysr9YWFhY0XV8+vQp7u3bt0eBzFhQFACxBhD7YzH8ExDPh0bsPxaYKDC5sUGTGDYgAMpbQNxAICT4gDgfyj5GbPYXAmKQy7OJVA/KUGGkli3TgLiZgJqXQBwIDPun5BRcdUC8HIfcdyCOBBp8HSP7MzLiTOroEmnQYEIH5UCD92MtW/7jrlD/ovG/gLwOxBeQxJqABk9GSecwxvv3738BXe4ATWrIZQQT0M6LWCx8DQoCIN4JxMeBBtdjeHe09h81nGgAEGAA59t54ZXuWKEAAAAASUVORK5CYII=" />
+</span>
+    <strong>Buzz clients</strong>
+    <span class="count">
+        <span>{{ collector.getNbCalls() }}</span>
+    </span>
+</span>
+{% endblock %}
+
+{% block panel %}
+    {% for client in collector.getData() %}
+        <h2>Client #{{ loop.index }} : {{ client.class|abbr_class }}</h2>
+
+        {% if not client.debug %}
+            <p>
+                <em>No debug for this client.</em>
+            </p>
+        {% else %}
+            {% for call in client.calls %}
+            <h3>Call #{{ loop.index }}</h3>
+            <table>
+                <tr>
+                    <th>Method</th>
+                    <td>{{ call.request.getMethod() }}</td>
+                </tr>
+                <tr>
+                    <th>Url</th>
+                    <td>{{ call.request.getUrl() }}</td>
+                </tr>
+                <tr>
+                    <th>Protocol version</th>
+                    <td>{{ call.request.getProtocolVersion() }}</td>
+                </tr>
+                <tr>
+                    <th>Is secure</th>
+                    <td>
+                        {% set count = call.request.isSecure() %}
+                        {% transchoice count %}
+                            {0} false|{1} true
+                        {% endtranschoice %}
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <th rowspan="2">Request</th>
+                    <th>Headers</th>
+                    <td>{{ call.request.getHeaders()|join("<br />")|raw }}</td>
+                </tr>
+                <tr>
+                    <th>Content</th>
+                    <td>
+                        {{ call.request.getContent()|raw }}
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <th rowspan="2">Response</th>
+                    <th>Headers</th>
+                    <td>{{ call.response.getHeaders()|join("<br />")|raw }}</td>
+                </tr>
+                <tr>
+                    <th>Content</th>
+                    <td>{{ call.response.getContent() }}</td>
+                </tr>
+            </table>
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}
