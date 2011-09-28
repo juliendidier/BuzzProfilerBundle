@@ -11,9 +11,9 @@ Installation
         [buzz]
             git=http://github.com/kriswallsmith/Buzz.git
 
-        [JMSSecurityExtraBundle]
-            git=http://github.com/juliendieir/BuzzProfilerBundle.git
-            target=/bundles/Buzz/Bundle/ProfilerBundler
+        [BuzzProfilerBundle]
+            git=http://github.com/juliendidier/BuzzProfilerBundle.git
+            target=/bundles/Buzz/Bundle/ProfilerBundle
 
 
   2. Add the `Buzz` library and this bundle to your project's autoloader bootstrap script:
