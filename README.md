@@ -42,9 +42,9 @@ Using Buzz Profiler
 To log your Buzz clients in the DataCollector, you have to decorate the ClientInterface object with a new DebugClient object,
 like that :
 
-        $request    = new Message\Request('GET', '', 'http://www.google.fr');
+        $request    = new Message\Request('GET', '/', 'http://www.google.com');
         $response   = new Message\Response();
-        $client     = new Client\Curl();
+        $client     = new Client\FileGetContents();
 
         if ($this->has('buzzprofiler.client_registry')) {
             $client = new DebugClient($client);
