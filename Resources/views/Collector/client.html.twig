@@ -60,6 +60,10 @@
                         {% endtranschoice %}
                     </td>
                 </tr>
+                <tr>
+                    <th>Duration</th>
+                    <td>{{ '%.0f'|format(call.duration) }} ms</td>
+                </tr>
             </table>
             <table>
                 <tr>

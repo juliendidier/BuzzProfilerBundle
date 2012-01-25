@@ -19,14 +19,20 @@ class DebugClient implements Client\ClientInterface
     public function send(Message\Request $request, Message\Response $response)
     {
         $logRequest = clone $request;
+        $start      = microtime(true);
+
         $this->client->send($request, $response);
+
+        $end         = microtime(true);
+        $duration    = ($end - $start) * 1000;
         $logResponse = clone $response;
-        
+
         array_push(
             $this->calls,
             array(
-                'request'   => $logRequest,
-                'response'  => $logResponse,
+                'request'  => $logRequest,
+                'response' => $logResponse,
+                'duration' => $duration,
             )
         );
     }
