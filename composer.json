@@ -1,5 +1,8 @@
 {
     "name": "juliendidier/buzz-profiler-bundle",
+    "description": "A Symfony2 Profiler for Buzz integration",
+    "license": "MIT",
+    "type": "symfony-bundle",
     "authors": [
         {
             "name": "Julien DIDIER",
@@ -9,6 +12,11 @@
     ],
     "require": {
         "php": ">=5.3.2",
+        "symfony/symfony": ">=2.0",
         "kriswallsmith/buzz": "dev-master"
-    }
+    },
+    "autoload": {
+        "psr-0": { "Buzz\\Bundle\\BuzzProfilerBundle": "" }
+    },
+    "target-dir": "Buzz/Bundle/BuzzProfilerBundle"
 }
