@@ -1,0 +1,14 @@
+{
+    "name": "juliendidier/buzz-profiler-bundle",
+    "authors": [
+        {
+            "name": "Julien DIDIER",
+            "email": "julien@jdidier.net",
+            "homepage": "http://jdidier.net"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "kriswallsmith/buzz": "dev-master"
+    }
+}
