@@ -12,10 +12,8 @@ class BuzzProfilerExtension extends Extension
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('datacollector.xml');
-        
-        // todo load only services.xml (client_registry) only on dev
+
         $loader->load('services.xml');
-        
+        $loader->load('datacollector.xml');
     }
 }

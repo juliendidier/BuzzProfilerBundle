@@ -1,19 +1,20 @@
 <?php
 
-namespace Buzz\Bundle\ProfilerBundle\Buzz;
+namespace Buzz\Bundle\ProfilerBundle\Buzz\Client;
 
 use Buzz\Message;
-use Buzz\Client;
+use Buzz\Client\ClientInterface;
 
-class DebugClient implements Client\ClientInterface
+class DebugClient implements ClientInterface
 {
 
     protected $client;
-    protected $calls = array();
+    protected $calls;
 
-    public function __construct(Client\ClientInterface $client)
+    public function __construct(ClientInterface $client)
     {
         $this->client = $client;
+        $this->calls  = array();
     }
 
     public function send(Message\Request $request, Message\Response $response)
