@@ -16,7 +16,7 @@
         "kriswallsmith/buzz": "dev-master"
     },
     "autoload": {
-        "psr-0": { "Buzz\\Bundle\\BuzzProfilerBundle": "" }
+        "psr-0": { "Buzz\\Bundle\\ProfilerBundle": "" }
     },
-    "target-dir": "Buzz/Bundle/BuzzProfilerBundle"
+    "target-dir": "Buzz/Bundle/ProfilerBundle"
 }
