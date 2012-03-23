@@ -41,7 +41,7 @@ class ClientDataCollector implements DataCollectorInterface
         $nbCalls = 0;
 
         foreach ($this->data as $client) {
-            if (key_exists('calls', $client) && is_array($client['calls'])) {
+            if (isset($client['calls']) && is_array($client['calls'])) {
                 $nbCalls+= count($client['calls']);
             }
         }
