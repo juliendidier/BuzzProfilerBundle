@@ -49,6 +49,21 @@ class ClientDataCollector implements DataCollectorInterface
         return $nbCalls;
     }
 
+    public function getDuration()
+    {
+        $duration = 0;
+
+        foreach ($this->data as $client) {
+            if (isset($client['calls']) && is_array($client['calls'])) {
+                $duration += array_sum(array_map(function ($call) {
+                    return $call['duration'];
+                }, $client['calls']));
+            }
+        }
+
+        return $duration;
+    }
+
     public function getData()
     {
         return $this->data;
