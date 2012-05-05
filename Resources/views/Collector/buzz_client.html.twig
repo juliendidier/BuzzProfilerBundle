@@ -2,14 +2,26 @@
 
 {% block toolbar %}
     {% set icon %}
-        <img width="23" height="28" alt="Buzz" style="border-width: 0; vertical-align: middle; margin-right: 5px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAcCAYAAACK7SRjAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAcNJREFUeNpi/P//PwOtABMDDcGo4fQ3nFFOTg5DUFJS8gkrK6vEly9fAt+9e7cZiz4uIJbCIv77IRDgdLmYmNgRDg4OaWYg4OLiWikoKKiGxRAHIL6JBe+Xl5dnxmq4qKjoDm5ubmsYH+h6TqAFp4EWiKD7GKoXHTNjDXMREZEeHh4ed3QnsrGx8bGzsx9CE8aV8/5hGC4kJBQJdHERrojh5OTUBPpqC8mpBWiwF9DFi5mYmBjxKQSq8Qb6bh5JhgM1bQRFHjGKeXl5E4GOCQIyvxKjnuXnz59noRHxH5hKTLD54MePH8/+/v17D8j8A8Rv8Rj+D5gS/2JN57Kysr9YWFhY0XV8+vQp7u3bt0eBzFhQFACxBhD7YzH8ExDPh0bsPxaYKDC5sUGTGDYgAMpbQNxAICT4gDgfyj5GbPYXAmKQy7OJVA/KUGGkli3TgLiZgJqXQBwIDPun5BRcdUC8HIfcdyCOBBp8HSP7MzLiTOroEmnQYEIH5UCD92MtW/7jrlD/ovG/gLwOxBeQxJqABk9GSecwxvv3738BXe4ATWrIZQQT0M6LWCx8DQoCIN4JxMeBBtdjeHe09h81nGgAEGAA59t54ZXuWKEAAAAASUVORK5CYII=" />
+        <img width="23" height="28" alt="Buzz" style="border-width: 0; vertical-align: middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAcCAYAAACK7SRjAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAcNJREFUeNpi/P//PwOtABMDDcGo4fQ3nFFOTg5DUFJS8gkrK6vEly9fAt+9e7cZiz4uIJbCIv77IRDgdLmYmNgRDg4OaWYg4OLiWikoKKiGxRAHIL6JBe+Xl5dnxmq4qKjoDm5ubmsYH+h6TqAFp4EWiKD7GKoXHTNjDXMREZEeHh4ed3QnsrGx8bGzsx9CE8aV8/5hGC4kJBQJdHERrojh5OTUBPpqC8mpBWiwF9DFi5mYmBjxKQSq8Qb6bh5JhgM1bQRFHjGKeXl5E4GOCQIyvxKjnuXnz59noRHxH5hKTLD54MePH8/+/v17D8j8A8Rv8Rj+D5gS/2JN57Kysr9YWFhY0XV8+vQp7u3bt0eBzFhQFACxBhD7YzH8ExDPh0bsPxaYKDC5sUGTGDYgAMpbQNxAICT4gDgfyj5GbPYXAmKQy7OJVA/KUGGkli3TgLiZgJqXQBwIDPun5BRcdUC8HIfcdyCOBBp8HSP7MzLiTOroEmnQYEIH5UCD92MtW/7jrlD/ovG/gLwOxBeQxJqABk9GSecwxvv3738BXe4ATWrIZQQT0M6LWCx8DQoCIN4JxMeBBtdjeHe09h81nGgAEGAA59t54ZXuWKEAAAAASUVORK5CYII=" />
+        {% if collector.getNbCalls %}
+            <span class="sf-toolbar-status">{{ collector.getNbCalls() }}</span>
+        {% endif %}
     {% endset %}
     {% set text %}
         <span>
             {% set count = collector.getNbCalls() %}
-            {% transchoice count %}
-                {0} No calls|{1} 1 call|]1,Inf] %count% calls
-            {% endtranschoice %}
+            <div class="sf-toolbar-info-piece">
+                <b>Total calls</b>
+                <span>
+                        {% transchoice count %}
+                        {0} No calls|{1} 1 call|]1,Inf] %count% calls
+                    {% endtranschoice %}
+                </span>
+            </div>
+            <div class="sf-toolbar-info-piece">
+                <b>Duration</b>
+                <span class="sf-toolbar-status sf-toolbar-status-green">{{ "%.0f"|format(collector.getDuration()) }} ms</span>
+            </div>
         </span>
     {% endset %}
     {% include 'WebProfilerBundle:Profiler:toolbar_item.html.twig' with { 'link': profiler_url } %}
@@ -23,6 +35,7 @@
     <strong>Buzz clients</strong>
     <span class="count">
         <span>{{ collector.getNbCalls() }}</span>
+        <span>{{ "%.0f"|format(collector.getDuration()) }} ms</span>
     </span>
 </span>
 {% endblock %}
