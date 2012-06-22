@@ -17,7 +17,7 @@ class DebugClient implements ClientInterface
         $this->calls  = array();
     }
 
-    public function send(Message\Request $request, Message\Response $response)
+    public function send(Message\RequestInterface $request, Message\MessageInterface $response)
     {
         $start = microtime(true);
         $this->client->send($request, $response);
