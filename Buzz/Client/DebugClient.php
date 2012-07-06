@@ -17,6 +17,24 @@ class DebugClient implements ClientInterface
         $this->calls  = array();
     }
 
+    /**
+     * intercepts method calls to the underlying client
+     *
+     * @param $fn the function
+     * @param array $args the arguments
+     * @return mixed
+     * @throws \InvalidArgumentException
+     */
+    public function __call($fn, array $args = array())
+    {
+        if (method_exists($this->client, $fn)) {
+
+            return call_user_func_array(array($this->client, $fn), $args);
+        }
+
+        throw new \InvalidArgumentException('Call to undefined method '.get_class($this).':'.$fn.'()');
+    }
+
     public function send(Message\RequestInterface $request, Message\MessageInterface $response)
     {
         $start = microtime(true);
