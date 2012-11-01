@@ -49,6 +49,7 @@ class DebugClient implements ClientInterface
                 'request'  => $request,
                 'response' => $response,
                 'duration' => $duration,
+                'size' => $this->formatBytes(mb_strlen($response->getContent()))
             )
         );
     }
@@ -63,4 +64,19 @@ class DebugClient implements ClientInterface
         return $this->calls;
     }
 
+    /**
+     * formats a bigint into a human readable size
+     *
+     * @param int $size
+     * @param int $precision
+     * @return string
+     */
+    private function formatBytes($bytes, $precision = 2)
+    {
+        $unit = array('B','KB','MB','GB','TB','PB','EB');
+
+        return @round(
+            $bytes / pow(1024, ($i = floor(log($bytes, 1024)))), $precision
+        ).' '.$unit[$i];
+    }
 }
