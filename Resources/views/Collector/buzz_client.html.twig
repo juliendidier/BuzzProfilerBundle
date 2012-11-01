@@ -58,7 +58,7 @@
                 </tr>
                 <tr>
                     <th>Url</th>
-                    <td>{{ call.request.getUrl() }}</td>
+                    <td><a href="{{ call.request.getUrl() }}" target="_blank">{{ call.request.getUrl() }}</a></td>
                 </tr>
                 <tr>
                     <th>Protocol version</th>
@@ -76,6 +76,10 @@
                 <tr>
                     <th>Duration</th>
                     <td>{{ '%.0f'|format(call.duration) }} ms</td>
+                </tr>
+                <tr>
+                    <th>Size</th>
+                    <td>{{ call.size }}</td>
                 </tr>
             </table>
             <table>
