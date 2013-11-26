@@ -4,6 +4,7 @@ namespace Buzz\Bundle\ProfilerBundle\Buzz\Client;
 
 use Buzz\Message;
 use Buzz\Client\ClientInterface;
+use Buzz\Exception\ClientException;
 
 class DebugClient implements ClientInterface
 {
@@ -38,7 +39,11 @@ class DebugClient implements ClientInterface
     public function send(Message\RequestInterface $request, Message\MessageInterface $response)
     {
         $start = microtime(true);
-        $this->client->send($request, $response);
+        try {
+            $this->client->send($request, $response);
+        } catch (ClientException $exception) {
+            $response->setContent($exception->getMessage());
+        }
 
         $end      = microtime(true);
         $duration = ($end - $start) * 1000;
