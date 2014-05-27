@@ -80,6 +80,10 @@ class DebugClient implements ClientInterface
     {
         $unit = array('B','KB','MB','GB','TB','PB','EB');
 
+        if (!$bytes) {
+            return "0 B";
+        }
+
         return @round(
             $bytes / pow(1024, ($i = floor(log($bytes, 1024)))), $precision
         ).' '.$unit[$i];
