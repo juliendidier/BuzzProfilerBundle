@@ -32,4 +32,12 @@ class DebugClientTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->request, $calls[0]['request']);
         $this->assertSame($this->response, $calls[0]['response']);
     }
+
+    public function test_that_formatBytes_method_des_not_throw_an_exception_on_empty_response()
+    {
+        $this->client->shouldReceive('send')->once()->with($this->request, $this->response);
+        $this->response->shouldReceive('getContent')->once()->andReturn('');
+
+        $this->debugClient->send($this->request, $this->response);
+    }
 }
